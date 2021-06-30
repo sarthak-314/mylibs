@@ -29,6 +29,7 @@ ds_register = functools.partial(hparams.register, prefix='ds:')
 def build_dataset_input(is_training, image_size, image_dtype, data_dir, split,
                         data_config):
   """Generate input for training and eval."""
+  print('build_dataset_input called')
   ds_cls = get_dataset_class(data_config.ds_name)
   return ds_cls(
       is_training=is_training,
@@ -366,10 +367,10 @@ class ImageNetInput():
       dataset = dataset.repeat()
     print('367')
     # Read the data from disk in parallel
-    dataset = dataset.interleave(
-        self.fetch_dataset,
-        num_parallel_calls=tf.data.experimental.AUTOTUNE,
-        deterministic=self.debug)
+    # dataset = dataset.interleave(
+    #     self.fetch_dataset,
+    #     num_parallel_calls=tf.data.experimental.AUTOTUNE,
+    #     deterministic=self.debug)
     print('373')
     if self.is_training and self.cache:
       dataset = dataset.cache().shuffle(
