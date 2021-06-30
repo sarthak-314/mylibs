@@ -338,9 +338,11 @@ class ImageNetInput():
     if self.data_dir == 'null' or not self.data_dir:
       logging.info('Undefined data_dir implies null input')
       return tf.data.Dataset.range(1).repeat().map(self._get_null_input)
-
+    print('self.data_dir: ', self.data_dir)
+    print("self.split_info['files']: ", self.split_info['files'])
     filenames = tf.io.gfile.glob(
         os.path.join(self.data_dir, self.split_info['files']))
+    print('filenames: ', filenames)
     filenames = sorted(filenames)[self.split_info['slice']]
     for f in filenames[:5]:
       logging.info('datafiles: %s', f)
