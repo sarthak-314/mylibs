@@ -377,6 +377,7 @@ class ImageNetInput():
     else:
       dataset = dataset.shuffle(
           self.shuffle_size_k * 1024, seed=self.shuffle_seed)
+    print('dataset returned')
     return dataset
 
   def input_fn(self, params):
@@ -394,7 +395,7 @@ class ImageNetInput():
     # computed according to the input pipeline deployment. See
     # tf.estimator.tpu.RunConfig for details.
     batch_size = params['batch_size']
-
+    print(f'input_fn called with params: {params}')
     if 'context' in params:
       current_host = params['context'].current_input_fn_deployment()[1]
       num_hosts = params['context'].num_hosts
