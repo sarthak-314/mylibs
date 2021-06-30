@@ -356,21 +356,21 @@ class ImageNetInput():
     # subset of files.  Each host only sees a subset of the entire dataset,
     # allowing us to cache larger datasets in memory.
     dataset = dataset.shard(num_hosts, index)
-
+    print('sharded')
     # file-level shuffle
     if self.is_training and self.shuffle_files:
       num_files_per_shard = (len(filenames) + num_hosts - 1) // num_hosts
       dataset = dataset.shuffle(num_files_per_shard, seed=self.shuffle_seed)
-
+    print('364')
     if self.is_training and not self.cache:
       dataset = dataset.repeat()
-
+    print('367')
     # Read the data from disk in parallel
     dataset = dataset.interleave(
         self.fetch_dataset,
         num_parallel_calls=tf.data.experimental.AUTOTUNE,
         deterministic=self.debug)
-
+    print('373')
     if self.is_training and self.cache:
       dataset = dataset.cache().shuffle(
           self.shuffle_size_k * 1024, seed=self.shuffle_seed).repeat()
