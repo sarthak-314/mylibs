@@ -372,12 +372,12 @@ class ImageNetInput():
     #     num_parallel_calls=tf.data.experimental.AUTOTUNE,
     #     deterministic=self.debug)
     print('373')
-    if self.is_training and self.cache:
-      dataset = dataset.cache().shuffle(
-          self.shuffle_size_k * 1024, seed=self.shuffle_seed).repeat()
-    else:
-      dataset = dataset.shuffle(
-          self.shuffle_size_k * 1024, seed=self.shuffle_seed)
+    # if self.is_training and self.cache:
+    #   dataset = dataset.cache().shuffle(
+    #       self.shuffle_size_k * 1024, seed=self.shuffle_seed).repeat()
+    # else:
+    #   dataset = dataset.shuffle(
+    #       self.shuffle_size_k * 1024, seed=self.shuffle_seed)
     print('dataset returned')
     return dataset
 
