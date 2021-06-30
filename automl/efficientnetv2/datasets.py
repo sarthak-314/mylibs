@@ -340,13 +340,17 @@ class ImageNetInput():
       return tf.data.Dataset.range(1).repeat().map(self._get_null_input)
     print('self.data_dir: ', self.data_dir)
     print("self.split_info['files']: ", self.split_info['files'])
-    filenames = tf.io.gfile.glob(
-        os.path.join(self.data_dir, self.split_info['files']))
+    some = os.path.join(self.data_dir, self.split_info['files'])
+    print('some: ', some)
+    filenames = tf.io.gfile.glob(some)
     print('filenames: ', filenames)
+    print("self.split_info['slice']: ", self.split_info['slice'])
     filenames = sorted(filenames)[self.split_info['slice']]
+    print('filenames after solt: ', filenames)
     for f in filenames[:5]:
       logging.info('datafiles: %s', f)
     dataset = tf.data.Dataset.from_tensor_slices(filenames)
+    print('dataset: ', dataset)
 
     # For multi-host training, we want each hosts to always process the same
     # subset of files.  Each host only sees a subset of the entire dataset,
